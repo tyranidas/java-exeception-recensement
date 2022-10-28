@@ -67,11 +67,18 @@ public class RecherchePopulationBorneService extends MenuService {
 		
 		int max = Integer.parseInt(saisieMax) * 1000;
 		
-		if (min < 0 || max < 0 || min > max  )
+		if (min < 0   )
 		{
-			throw new RecensementException("Erreur dans la saisie des minimum et maximum");
+			throw new RecensementException("Le minimum doit être supérieur à 0");
 		}
-		
+		if (max < 0   )
+		{
+			throw new RecensementException("Le maximum doit être supérieur à 0");
+		}
+		if ( min > max  )
+		{
+			throw new RecensementException("Le minimum doit être inférieur au maximum");
+		}
 		
 		for (Ville ville : villes) {
 			if (ville.getCodeDepartement().equalsIgnoreCase(choix)) {

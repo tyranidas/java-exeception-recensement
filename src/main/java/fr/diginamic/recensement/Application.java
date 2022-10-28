@@ -2,6 +2,8 @@ package fr.diginamic.recensement;
 
 import java.util.Scanner;
 
+import fr.diginamic.exceptions.RecensementException;
+import fr.diginamic.exceptions.RechercherPopBorneServiceException;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.services.RechercheDepartementsPlusPeuplees;
 import fr.diginamic.recensement.services.RecherchePopulationBorneService;
@@ -25,8 +27,9 @@ public class Application {
 	 * Point d'entrée
 	 * 
 	 * @param args arguments (non utilisés ici)
+	 * @throws RechercherPopBorneServiceException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws RecensementException, RechercherPopBorneServiceException {
 		Scanner scanner = new Scanner(System.in);
 
 		String filePath = ClassLoader.getSystemClassLoader().getResource("recensement.csv").getFile();
@@ -47,10 +50,10 @@ public class Application {
 			// Poser une question à l'utilisateur
 			String choixMenu = scanner.nextLine();
 
-			// Conversion du choix utilisateur en int
-			choix = Integer.parseInt(choixMenu);
+				choix = Integer.parseInt(choixMenu);
 
 			// On exécute l'option correspondant au choix de l'utilisateur
+			try {
 			switch (choix) {
 			case 1:
 				RecherchePopulationVilleService rechercheVille = new RecherchePopulationVilleService();
@@ -88,6 +91,12 @@ public class Application {
 				RechercheVillesPlusPeupleesFrance rechercheVillesPlusPeupleesFrance = new RechercheVillesPlusPeupleesFrance();
 				rechercheVillesPlusPeupleesFrance.traiter(recensement, scanner);
 				break;
+			}
+				
+			}
+			catch (RecensementException message)
+			{
+				System.out.println(message);
 			}
 
 		} while (choix != 99);

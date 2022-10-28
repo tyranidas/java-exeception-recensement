@@ -5,6 +5,8 @@ import java.util.Scanner;
 
 import org.apache.commons.lang3.math.NumberUtils;
 
+import fr.diginamic.exceptions.RecensementException;
+import fr.diginamic.exceptions.RechercherPopBorneServiceException;
 import fr.diginamic.recensement.entites.Recensement;
 import fr.diginamic.recensement.entites.Ville;
 
@@ -15,7 +17,7 @@ import fr.diginamic.recensement.entites.Ville;
 public class RecherchePopulationDepartementService extends MenuService {
 
 	@Override
-	public void traiter(Recensement rec, Scanner scanner) {
+	public void traiter(Recensement rec, Scanner scanner) throws  RecensementException {
 		
 		System.out.println("Quel est le code du département recherché ? ");
 		String choix = scanner.nextLine();
@@ -30,13 +32,16 @@ public class RecherchePopulationDepartementService extends MenuService {
 			if (ville.getCodeDepartement().equalsIgnoreCase(choix)){
 				somme+=ville.getPopulation();
 			}
+			
 		}
 		if (somme>0){
 			System.out.println("Population du département "+choix+" : "+ somme);
 		}
-		else {
-			System.out.println("Département "+choix+ " non trouvé.");
+		else
+		{
+			throw new RecensementException("Le numéro du département est inconnu");
 		}
+		
 	}
 
 }

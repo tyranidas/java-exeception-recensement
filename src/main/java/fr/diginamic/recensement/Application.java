@@ -96,7 +96,7 @@ public class Application {
 			}
 			catch (RecensementException message)
 			{
-				System.out.println(message);
+				System.err.println(message.getMessage());
 			}
 
 		} while (choix != 99);
